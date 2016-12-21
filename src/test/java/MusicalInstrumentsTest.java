@@ -12,34 +12,31 @@ import java.util.List;
 import static io.restassured.RestAssured.when;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static requests.Requests.post;
 
 /**
  * Created by solg on 20.12.2016.
  */
 public class MusicalInstrumentsTest extends MusicalInstruments{
 
-    @BeforeClass
-    public void setup() {
-        RestAssured.baseURI = "http://localhost";
-        RestAssured.port = 3000;
-        RestAssured.basePath = "/musicalInstruments";
-    }
+    public final static String INSTURL = "http://localhost:3000/musicalInstruments";
+
 
     @Test
     public static void addUniqueInstrumentTest() {
 
        MusicalInstrumentsModel inst = new MusicalInstrumentsModel();
 
-        if (getAllInst().isEmpty()) {
+        if (getAllInst(INSTURL).isEmpty()) {
             inst.setId(1);
         } else {
-            inst.setId(getMaxMusicalId() + 1);
+            inst.setId(getMaxMusicalId(INSTURL) + 1);
         }
 
         inst.setName("MyMusicalInst");
         inst.setPlayID(4);
 
-        assertThat("Error with adding actors", postInst(inst), is(201));
+        assertThat("Error with adding actors", post(inst, INSTURL), is(201));
     }
 
 }

@@ -3,6 +3,7 @@ package requests;
 import com.example.models.ActorsModel;
 import com.example.models.Model;
 import io.restassured.http.ContentType;
+import io.restassured.response.Response;
 
 import static io.restassured.RestAssured.given;
 
@@ -33,5 +34,12 @@ public class Requests {
                 when().
                 put(url + "/"+ id).then().extract().statusCode();
 
+    }
+
+    public static Response getModel (String url, int id) {
+        return given()
+                .contentType(ContentType.JSON)
+                .when()
+                .get(url +"/" + id);
     }
 }

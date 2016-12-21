@@ -18,6 +18,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.notNullValue;
+import static requests.Requests.getModel;
 
 /**
  * Created by solg on 18.12.2016.
@@ -60,6 +61,7 @@ public class Actors {
         }
         return maxIndex;
     }
+
 
 
 }

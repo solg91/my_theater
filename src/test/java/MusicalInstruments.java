@@ -15,55 +15,28 @@ import static io.restassured.RestAssured.when;
  */
 public class MusicalInstruments {
 
-    public static MusicalInstrumentsModel getInstById(int id){
+    public static MusicalInstrumentsModel getInstById(String url, int id){
 
         MusicalInstrumentsModel inst = new MusicalInstrumentsModel();
-        inst = when().get("/id").as(MusicalInstrumentsModel.class);
+        inst = when().get(url + "/id").as(MusicalInstrumentsModel.class);
         return inst;
 
     }
 
-    public static List<MusicalInstrumentsModel> getAllInst() {
+    public static List<MusicalInstrumentsModel> getAllInst(String url) {
         List<MusicalInstrumentsModel> listInst = Arrays.asList(
                 when()
-                        .get()
+                        .get(url)
                         .then()
                         .extract().body().as(MusicalInstrumentsModel[].class));
         return listInst;
     }
 
-    public static Integer deleteInstById(int id){
-        return  given().
-                contentType("application/json").
-                when().
-                delete("/" + id).then().extract().statusCode();
-    }
 
-    public static Integer postInst(MusicalInstrumentsModel inst) {
-        Gson gson = new Gson();
-        String user = gson.toJson(inst);
-        return given().contentType(ContentType.JSON).
-                body(user).
-                when().
-                post().then().extract().statusCode();
-
-    }
-
-    public static Integer putInst(MusicalInstrumentsModel inst, int id ) {
-        Gson gson = new Gson();
-        String user = gson.toJson(inst);
-        String s;
-        return given().
-                contentType(ContentType.JSON).
-                body(user).
-                when().
-                put("/"+ id).then().extract().statusCode();
-
-    }
-    public static Integer getMaxMusicalId() {
+    public static Integer getMaxMusicalId(String url) {
 
         List<MusicalInstrumentsModel> list = new ArrayList<MusicalInstrumentsModel>();
-        list.addAll(getAllInst());
+        list.addAll(getAllInst(url));
         int[] ar = new int[list.size()];
         // while(itr.hasNext()){
         for (int i = 0; i <= ar.length - 1; i++) {
