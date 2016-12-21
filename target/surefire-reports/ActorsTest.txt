@@ -1,0 +1,15 @@
+-------------------------------------------------------------------------------
+Test set: ActorsTest
+-------------------------------------------------------------------------------
+Tests run: 10, Failures: 2, Errors: 0, Skipped: 4, Time elapsed: 4.784 sec <<< FAILURE! - in ActorsTest
+findAllActorsWithMusicalInstruments2or6(ActorsTest)  Time elapsed: 0.075 sec  <<< FAILURE!
+java.lang.ArrayIndexOutOfBoundsException: 0
+	at ActorsTest.findAllActorsWithMusicalInstruments2or6(ActorsTest.java:154)
+
+deleteActorTest(ActorsTest)  Time elapsed: 0.2 sec  <<< FAILURE!
+java.lang.AssertionError: 
+Wrong delete operation
+Expected: is <200>
+     but: was <404>
+	at ActorsTest.deleteActorTest(ActorsTest.java:213)
+

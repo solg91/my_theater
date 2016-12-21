@@ -1,0 +1,10 @@
+-------------------------------------------------------------------------------
+Test set: TestSuite
+-------------------------------------------------------------------------------
+Tests run: 8, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 4.997 sec <<< FAILURE! - in TestSuite
+addUniqueInstrumentTest(MusicalInstrumentsTest)  Time elapsed: 0.001 sec  <<< FAILURE!
+com.fasterxml.jackson.databind.JsonMappingException: 
+Can not deserialize instance of com.example.models.MusicalInstrumentsModel[] out of START_OBJECT token
+ at [Source: java.io.StringReader@34645867; line: 1, column: 1]
+	at MusicalInstrumentsTest.addUniqueInstrumentTest(MusicalInstrumentsTest.java:33)
+
