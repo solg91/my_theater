@@ -1,0 +1,405 @@
+{
+  "actors": [
+    {
+      "id": 1,
+      "name": "Nicholas Runolfsdottir V",
+      "email": "Sherwood@rosamond.me",
+      "musicalInstruments": [
+        1,
+        3,
+        5
+      ],
+      "currentPlay": 1,
+      "previousPlay": [
+        5
+      ],
+      "phone": "586.493.6943 x140",
+      "size": 50,
+      "education": {
+        "name": "Abernathy Group kurs",
+        "faculty": "Acting technique",
+        "yearOfEnding": "1991"
+      }
+    },
+    {
+      "id": 2,
+      "name": "Olga Karpova",
+      "email": "karpova@gmail.cpm",
+      "musicalInstruments": [
+        2
+      ],
+      "currentPlay": 2,
+      "previousPlay": [
+        1
+      ],
+      "phone": "123.568.464",
+      "size": 36,
+      "education": {
+        "name": "art University",
+        "faculty": "Acting technique",
+        "yearOfEnding": "2000"
+      }
+    },
+    {
+      "id": 3,
+      "name": "Petr Kolcov",
+      "email": "kolcov@gmail.com",
+      "musicalInstruments": [
+        1,
+        3,
+        10
+      ],
+      "currentPlay": 4,
+      "previousPlay": [
+        5
+      ],
+      "phone": "555.999.777",
+      "size": 38,
+      "education": {
+        "name": "Abernathy Group kurs",
+        "faculty": "Kurs Kirilova",
+        "yearOfEnding": "2002"
+      }
+    },
+    {
+      "id": 4,
+      "name": "Inna Romanova",
+      "email": "romanova@gmail.com",
+      "musicalInstruments": [
+        2,
+        6
+      ],
+      "currentPlay": 2,
+      "previousPlay": [
+        1
+      ],
+      "phone": "586.493.6943 x140",
+      "size": 40,
+      "education": {
+        "name": "Institute of Poplavskiy",
+        "faculty": "Folk dance art",
+        "yearOfEnding": "1989"
+      }
+    },
+    {
+      "id": 5,
+      "name": "Anna Semashko",
+      "email": "anna@gmail.com",
+      "musicalInstruments": [
+        1,
+        3,
+        5,
+        7
+      ],
+      "currentPlay": 3,
+      "previousPlay": [
+        5
+      ],
+      "phone": "535.3453535.345",
+      "size": 34,
+      "education": {
+        "name": "Academy Lazaryan",
+        "faculty": "Acting technique",
+        "yearOfEnding": "1999"
+      }
+    },
+    {
+      "id": 6,
+      "name": "Radion Ivanov",
+      "email": "ivanov@gmail.com",
+      "musicalInstruments": [
+        6
+      ],
+      "currentPlay": 1,
+      "previousPlay": [
+        2
+      ],
+      "phone": "666.777.333",
+      "size": 44,
+      "education": {
+        "name": "Abernathy Group kurs",
+        "faculty": "Kurs Kirilova",
+        "yearOfEnding": "2000"
+      }
+    },
+    {
+      "id": 7,
+      "name": "Ivan Egorovich",
+      "email": "ivan@gmail.com",
+      "musicalInstruments": [
+        6
+      ],
+      "currentPlay": 1,
+      "previousPlay": [
+        2,
+        8
+      ],
+      "phone": "6767678686",
+      "size": 46,
+      "education": {
+        "name": "Uiniversity Alberta Nobel",
+        "faculty": "acting skills",
+        "yearOfEnding": "2010"
+      }
+    },
+    {
+      "id": 8,
+      "name": "Ivan Egorovich",
+      "email": "ivan@gmail.com",
+      "musicalInstruments": [
+        3,
+        7
+      ],
+      "currentPlay": 1,
+      "previousPlay": [
+        2,
+        8
+      ],
+      "phone": "6767678686",
+      "size": 46,
+      "education": {
+        "name": "Uiniversity Alberta Nobel",
+        "faculty": "acting skills",
+        "yearOfEnding": "2010"
+      }
+    },
+    {
+      "id": 9,
+      "name": "Marina Nazarenko",
+      "email": "marina@gmail.com",
+      "musicalInstruments": [
+        5,
+        10
+      ],
+      "currentPlay": 5,
+      "previousPlay": [
+        5
+      ],
+      "phone": "1212.1231.123",
+      "size": 38,
+      "education": {
+        "name": "Uiniversity Alberta Nobel",
+        "faculty": "acting skills",
+        "yearOfEnding": "2010"
+      }
+    },
+    {
+      "id": 10,
+      "name": "Ivan Egorovich",
+      "email": "ivan@gmail.com",
+      "musicalInstruments": [
+        3,
+        7
+      ],
+      "currentPlay": 1,
+      "previousPlay": [
+        2,
+        8
+      ],
+      "phone": "6767678686",
+      "size": 46,
+      "education": {
+        "name": "Uiniversity Alberta Nobel",
+        "faculty": "acting skills",
+        "yearOfEnding": "2010"
+      }
+    },
+    {
+      "id": 11,
+      "name": "Ivan Egorovich",
+      "email": "ivan@gmail.com",
+      "musicalInstruments": [
+        3,
+        7
+      ],
+      "currentPlay": 1,
+      "previousPlay": [
+        2,
+        8
+      ],
+      "phone": "6767678686",
+      "size": 46,
+      "education": {
+        "name": "Uiniversity Alberta Nobel",
+        "faculty": "acting skills",
+        "yearOfEnding": "2010"
+      }
+    }
+  ],
+  "plays": [
+    {
+      "id": 1,
+      "name": "Romeo and Juliet",
+      "title": "The play was written by W.Shakespeare. The action takes place in Verona",
+      "director": "Ivanov Mikhail S.",
+      "numberOfPeople": 25
+    },
+    {
+      "id": 2,
+      "name": "Crime and Punishment",
+      "title": "The play was written by Dostoevsky. In the play, the guy kills the old woman because of money",
+      "director": "Potapova Irina.",
+      "numberOfPeople": 10
+    },
+    {
+      "id": 3,
+      "name": "The Snow Queen",
+      "title": "The play was written by Andersen. In the play a little brave girl tries to return her lover",
+      "director": "Ivanov Mikhail S.",
+      "numberOfPeople": 40
+    },
+    {
+      "id": 4,
+      "name": "The Master and Margarita",
+      "title": "The play was written by Bulgakov. which help the forces of evil",
+      "director": "Karpov Dmitriy.",
+      "numberOfPeople": 25
+    },
+    {
+      "id": 5,
+      "name": "Cinderella",
+      "title": "The play was written by Andersen.",
+      "director": "Ivanov Mikhail S.",
+      "numberOfPeople": 30
+    }
+  ],
+  "musicalInstruments": [
+    {
+      "id": 1,
+      "playID": 1,
+      "name": "Guitar"
+    },
+    {
+      "id": 2,
+      "playID": 1,
+      "name": "Piano"
+    },
+    {
+      "id": 3,
+      "playID": 1,
+      "name": "Cello"
+    },
+    {
+      "id": 4,
+      "playID": 3,
+      "name": "Violin"
+    },
+    {
+      "id": 5,
+      "playID": 3,
+      "name": "Drum"
+    },
+    {
+      "id": 6,
+      "playID": 3,
+      "name": "Organ"
+    },
+    {
+      "id": 7,
+      "playID": 1,
+      "name": "Harp2"
+    },
+    {
+      "id": 8,
+      "playID": 4,
+      "name": "Flute"
+    },
+    {
+      "id": 9,
+      "playID": 5,
+      "name": "Harp"
+    },
+    {
+      "id": 10,
+      "playID": 5,
+      "name": "Accordion"
+    },
+    {
+      "id": 11,
+      "playID": 4,
+      "name": "MyMusicalInst"
+    },
+    {
+      "id": 12,
+      "playID": 4,
+      "name": "MyMusicalInst"
+    },
+    {
+      "id": 13,
+      "playID": 4,
+      "name": "MyMusicalInst"
+    }
+  ],
+  "costumes": [
+    {
+      "id": 1,
+      "playID": 1,
+      "name": "Costume of Juliet",
+      "title": "Women's dress",
+      "size": 36
+    },
+    {
+      "id": 2,
+      "playID": 1,
+      "name": "Costume of Romeo",
+      "title": "Men's suit",
+      "size": 50
+    },
+    {
+      "id": 3,
+      "playID": 1,
+      "name": "Costume of Tybalt",
+      "title": "Men's suit",
+      "size": 48
+    },
+    {
+      "id": 4,
+      "playID": 3,
+      "name": "Costume of Snow Queen",
+      "title": "Women's dress",
+      "size": 38
+    },
+    {
+      "id": 5,
+      "playID": 3,
+      "name": "Costume of Gerda",
+      "title": "Women's dress",
+      "size": 36
+    },
+    {
+      "id": 6,
+      "playID": 3,
+      "name": "Costume of Kay",
+      "title": "Men's suit",
+      "size": 40
+    },
+    {
+      "id": 7,
+      "playID": 4,
+      "name": "Costume of Margarita",
+      "title": "Women's dress",
+      "size": 40
+    },
+    {
+      "id": 8,
+      "playID": 4,
+      "name": "Costume of Master",
+      "title": "Men's suit",
+      "size": 46
+    },
+    {
+      "id": 9,
+      "playID": 5,
+      "name": "Costume of Cinderella",
+      "title": "Women's dress",
+      "size": 36
+    },
+    {
+      "id": 10,
+      "playID": 5,
+      "name": "Costume of Prince",
+      "title": "Men's suit",
+      "size": 44
+    }
+  ]
+}
