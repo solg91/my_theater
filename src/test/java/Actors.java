@@ -1,4 +1,5 @@
 import com.example.models.ActorsModel;
+import com.example.models.Model;
 import com.google.gson.Gson;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
@@ -23,52 +24,27 @@ import static org.hamcrest.Matchers.notNullValue;
  */
 public class Actors {
 
-     public static ActorsModel getActorById(int id){
-     ActorsModel actor = new ActorsModel();
-        actor = when().get("/id").as(ActorsModel.class);
-        return actor;
+
+    public static ActorsModel getActorById( String url, int id){
+        ActorsModel model = new ActorsModel();
+        model = when().get(url +"/" +id).as(ActorsModel.class);
+        return model;
 
     }
 
-    public static List<ActorsModel> getAllActors() {
+    public static List<ActorsModel> getAllActors(String url) {
         List<ActorsModel> listActors = Arrays.asList(
                 when()
-                        .get()
+                        .get(url)
                         .then()
                         .extract().body().as(ActorsModel[].class));
         return listActors;
     }
 
-    public static Integer deleteActorsById(int id){
-              return  given().
-                contentType("application/json").
-                when().
-                delete("/" + id).then().extract().statusCode();
-    }
-
-    public static Integer postActor(ActorsModel actor) {
-
-        return given().contentType(ContentType.JSON).
-                 body(actor).
-                 when().
-                 post().then().extract().statusCode();
-
-    }
-
-    public static Integer putActor(ActorsModel actor, int id ) {
-               return given().
-                contentType(ContentType.JSON).
-                body(actor).
-                when().
-                put("/"+ id).then().extract().statusCode();
-
-
-
-    }
-    public static Integer getMaxActorsId() {
+    public static int getMaxActorsId(String url) {
 
         List<ActorsModel> list = new ArrayList<ActorsModel>();
-        list.addAll(getAllActors());
+        list.addAll(getAllActors(url));
 
         int[] ar = new int[list.size()];
 

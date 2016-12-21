@@ -12,7 +12,7 @@ import java.util.Map;
 /**
  * Created by solg on 18.12.2016.
  */
-public class ActorsModel {
+public class ActorsModel extends Model {
     @JsonProperty("id")
     private Integer id;
     @JsonProperty("name")

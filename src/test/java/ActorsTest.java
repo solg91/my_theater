@@ -1,31 +1,26 @@
 import com.example.models.ActorsModel;
 import com.example.models.EducationModel;
-import com.example.models.MusicalInstrumentsModel;
-import io.restassured.RestAssured;
 import org.testng.annotations.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 
+
 import static io.restassured.RestAssured.given;
-import static io.restassured.RestAssured.when;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.hamcrest.core.IsNot.not;
+import static requests.Requests.delete;
+import static requests.Requests.post;
+import static requests.Requests.put;
 
 /**
  * Created by solg on 19.12.2016.
  */
 public class ActorsTest extends Actors {
 
-    @BeforeClass
-    public void setup() {
-        RestAssured.baseURI = "http://localhost";
-        RestAssured.port = 3000;
-        RestAssured.basePath = "/actors";
-    }
+    public final static String ACTORSURL = "http://localhost:3000/actors";
 
     @Test
     public static void addUniqueActorTest() {
@@ -44,10 +39,10 @@ public class ActorsTest extends Actors {
 
         ActorsModel actorsModel = new ActorsModel();
 
-        if (getAllActors().isEmpty()) {
+        if (getAllActors(ACTORSURL).isEmpty()) {
             actorsModel.setId(1);
         } else {
-            actorsModel.setId(getMaxActorsId() + 1);
+            actorsModel.setId(getMaxActorsId(ACTORSURL) + 1);
         }
 
         actorsModel.setName("Marina Nazarenko");
@@ -59,7 +54,7 @@ public class ActorsTest extends Actors {
         actorsModel.setSize(38);
         actorsModel.setEducation(educationModel);
 
-        assertThat("Error with adding actors", postActor(actorsModel), is(201));
+        assertThat("Error with adding actors", post(actorsModel, ACTORSURL), is(201));
     }
 
     @Test
@@ -77,7 +72,7 @@ public class ActorsTest extends Actors {
         educationModel.setYearOfEnding("2010");
 
         ActorsModel actorsModel = new ActorsModel();
-        actorsModel.setId(getMaxActorsId());
+        actorsModel.setId(getMaxActorsId(ACTORSURL));
         actorsModel.setName("Marina Nazarenko");
         actorsModel.setEmail("marina@gmail.com");
         actorsModel.setCurrentPlay(5);
@@ -87,15 +82,14 @@ public class ActorsTest extends Actors {
         actorsModel.setSize(38);
         actorsModel.setEducation(educationModel);
 
-        postActor(actorsModel);
-        assertThat("User was added successfully", postActor(actorsModel), is(500));
+        post(actorsModel, ACTORSURL);
+        assertThat("User was added successfully", post(actorsModel, ACTORSURL), is(500));
     }
-
 
 
     @Test
     public static void updateExistingActorTest() {
-        assertThat("List is empty", getAllActors(), is(not(nullValue())));
+        assertThat("List is empty", getAllActors(ACTORSURL), is(not(nullValue())));
 
         List<Integer> listMusicalInstruments = new ArrayList<Integer>();
         listMusicalInstruments.add(3);
@@ -111,7 +105,7 @@ public class ActorsTest extends Actors {
         educationModel.setYearOfEnding("2010");
 
         ActorsModel actorsModel = new ActorsModel();
-        actorsModel.setId(getMaxActorsId());
+        actorsModel.setId(getMaxActorsId(ACTORSURL));
         actorsModel.setName("Ivan Egorovich");
         actorsModel.setEmail("ivan@gmail.com");
         actorsModel.setCurrentPlay(1);
@@ -121,16 +115,17 @@ public class ActorsTest extends Actors {
         actorsModel.setSize(46);
         actorsModel.setEducation(educationModel);
 
+        ActorsModel model =  new ActorsModel();
 
-        assertThat("error with updating user", putActor(actorsModel,getMaxActorsId()), is(200));
+        assertThat("error with updating user", put(actorsModel,ACTORSURL,getMaxActorsId(ACTORSURL)), is(200));
 
-        assertThat("Name",getActorById(getMaxActorsId()).getName(), is(not("Marina Nazarenko")));
-        assertThat("Email",getActorById(getMaxActorsId()).getEmail(), is(not("marina@gmail.com")));
-        assertThat("CurrentPlay",getActorById(getMaxActorsId()).getCurrentPlay(), is(not(5)));
-        assertThat("PreviousPlay",getActorById(getMaxActorsId()).getPreviousPlay(), not(hasItems(equalTo(5))));
-        assertThat("MusicalInstruments",getActorById(getMaxActorsId()).getMusicalInstruments(), not(hasItems(equalTo(5))));
-        assertThat("Phone",getActorById(getMaxActorsId()).getPhone(), is(not("1212.1231.123")));
-        assertThat("Size",getActorById(getMaxActorsId()).getSize(), is(not(38)));
+        assertThat("Name",getActorById(ACTORSURL, getMaxActorsId(ACTORSURL)).getName(), is(not("Marina Nazarenko")));
+        assertThat("Email",getActorById(ACTORSURL,getMaxActorsId(ACTORSURL)).getEmail(), is(not("marina@gmail.com")));
+        assertThat("CurrentPlay",getActorById(ACTORSURL,getMaxActorsId(ACTORSURL)).getCurrentPlay(), is(not(5)));
+        assertThat("PreviousPlay",getActorById(ACTORSURL,getMaxActorsId(ACTORSURL)).getPreviousPlay(), not(hasItems(equalTo(5))));
+        assertThat("MusicalInstruments",getActorById(ACTORSURL,getMaxActorsId(ACTORSURL)).getMusicalInstruments(), not(hasItems(equalTo(5))));
+        assertThat("Phone",getActorById(ACTORSURL,getMaxActorsId(ACTORSURL)).getPhone(), is(not("1212.1231.123")));
+        assertThat("Size",getActorById(ACTORSURL,getMaxActorsId(ACTORSURL)).getSize(), is(not(38)));
 
     }
 
@@ -140,11 +135,12 @@ public class ActorsTest extends Actors {
         List<Integer> listInst = new ArrayList<Integer>();
         listInst.add(2);
         listInst.add(6);
+
         List<ActorsModel> listActorsWithInstruments = Arrays.asList(
                 given().
                         param("musicalInstruments", listInst).
                         when()
-                        .get("/")
+                        .get(ACTORSURL +"/")
                         .then()
                         .extract().body().as(ActorsModel[].class));
 
@@ -156,12 +152,13 @@ public class ActorsTest extends Actors {
     public static void findAllActorsWithSizeAndCurrentPlays(){
         int size = 50;
         int currentPlay = 1;
+
         List<ActorsModel> listActorsWithInstruments = Arrays.asList(
                 given().
                         param("size", size).
                         param("currentPlay", currentPlay ).
                         when()
-                        .get("/")
+                        .get(ACTORSURL + "/")
                         .then()
                         .extract().body().as(ActorsModel[].class));
 
@@ -195,50 +192,15 @@ public class ActorsTest extends Actors {
         actorsModel.setPhone("6767678686");
         actorsModel.setSize(46);
         actorsModel.setEducation(educationModel);
+        actorsModel.setMusicalInstruments(listInstToAdd);
 
-           actorsModel.setMusicalInstruments(listInstToAdd);
-
-
-        assertThat("error with updating user",putActor(actorsModel, 7), is(200));
+        assertThat("error with updating user", put(actorsModel,ACTORSURL, 7), is(200));
     }
 
     @Test
     public static void deleteActorTest() {
-        assertThat("List is empty", getAllActors(), is(not(nullValue())));
-
-        List<Integer> listMusicalInstruments = new ArrayList<Integer>();
-        listMusicalInstruments.add(5);
-        listMusicalInstruments.add(10);
-
-        List<Integer> previosPlay = new ArrayList<Integer>();
-        previosPlay.add(5);
-
-        EducationModel educationModel = new EducationModel();
-        educationModel.setName("Uiniversity Alberta Nobel");
-        educationModel.setFaculty("acting skills");
-        educationModel.setYearOfEnding("2010");
-
-        ActorsModel actorsModel = new ActorsModel();
-
-        if (getAllActors().isEmpty()) {
-            actorsModel.setId(1);
-        } else {
-            actorsModel.setId(getMaxActorsId() + 1);
-        }
-
-        actorsModel.setName("Marina Nazarenko");
-        actorsModel.setEmail("marina@gmail.com");
-        actorsModel.setCurrentPlay(5);
-        actorsModel.setMusicalInstruments(listMusicalInstruments);
-        actorsModel.setPreviousPlay(previosPlay);
-        actorsModel.setPhone("1212.1231.123");
-        actorsModel.setSize(38);
-        actorsModel.setEducation(educationModel);
-        postActor(actorsModel);
-
-        deleteActorsById(getMaxActorsId() + 1);
-        assertThat("Wrong delete operation", deleteActorsById(getMaxActorsId()), is(200));
+        addUniqueActorTest();
+        assertThat(delete(ACTORSURL, getMaxActorsId(ACTORSURL)), is(200));
     }
-
 
 }

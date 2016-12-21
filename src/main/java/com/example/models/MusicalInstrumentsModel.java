@@ -11,7 +11,7 @@ import java.util.Map;
 /**
  * Created by solg on 18.12.2016.
  */
-public class MusicalInstrumentsModel {
+public class MusicalInstrumentsModel extends Model{
     @JsonProperty("id")
     public Integer id;
     @JsonProperty("playID")

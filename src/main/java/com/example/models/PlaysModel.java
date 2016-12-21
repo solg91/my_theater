@@ -11,7 +11,7 @@ import java.util.Map;
 /**
  * Created by solg on 18.12.2016.
  */
-public class PlaysModel {
+public class PlaysModel extends Model{
     @JsonProperty("id")
     private Integer id;
     @JsonProperty("name")
