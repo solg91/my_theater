@@ -1,4 +1,4 @@
-package com.example.models;
+package models;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
@@ -11,17 +11,17 @@ import java.util.Map;
 /**
  * Created by solg on 18.12.2016.
  */
-public class CostumesModel extends Model{
+public class PlaysModel extends Model {
     @JsonProperty("id")
     private Integer id;
-    @JsonProperty("playID")
-    private Integer playID;
     @JsonProperty("name")
     private String name;
     @JsonProperty("title")
     private String title;
-    @JsonProperty("size")
-    private Integer size;
+    @JsonProperty("director")
+    private String director;
+    @JsonProperty("number of people")
+    private Integer numberOfPeople;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
@@ -33,16 +33,6 @@ public class CostumesModel extends Model{
     @JsonProperty("id")
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    @JsonProperty("playID")
-    public Integer getPlayID() {
-        return playID;
-    }
-
-    @JsonProperty("playID")
-    public void setPlayID(Integer playID) {
-        this.playID = playID;
     }
 
     @JsonProperty("name")
@@ -65,14 +55,24 @@ public class CostumesModel extends Model{
         this.title = title;
     }
 
-    @JsonProperty("size")
-    public Integer getSize() {
-        return size;
+    @JsonProperty("director")
+    public String getDirector() {
+        return director;
     }
 
-    @JsonProperty("size")
-    public void setSize(Integer size) {
-        this.size = size;
+    @JsonProperty("director")
+    public void setDirector(String director) {
+        this.director = director;
+    }
+
+    @JsonProperty("number of people")
+    public Integer getNumberOfPeople() {
+        return numberOfPeople;
+    }
+
+    @JsonProperty("number of people")
+    public void setNumberOfPeople(Integer numberOfPeople) {
+        this.numberOfPeople = numberOfPeople;
     }
 
     @JsonAnyGetter
@@ -84,5 +84,4 @@ public class CostumesModel extends Model{
     public void setAdditionalProperty(String name, Object value) {
         this.additionalProperties.put(name, value);
     }
-
 }

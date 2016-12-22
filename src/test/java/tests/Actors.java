@@ -1,16 +1,16 @@
-import com.example.models.ActorsModel;
-import com.example.models.Model;
+package tests;
+
+import com.google.common.reflect.Parameter;
 import com.google.gson.Gson;
+import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.response.ValidatableResponse;
+import models.ActorsModel;
 import org.testng.annotations.BeforeClass;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 import static io.restassured.RestAssured.given;
 import static io.restassured.RestAssured.when;
@@ -26,40 +26,34 @@ import static requests.Requests.getModel;
 public class Actors {
 
 
-    public static ActorsModel getActorById( String url, int id){
-        ActorsModel model = new ActorsModel();
-        model = when().get(url +"/" +id).as(ActorsModel.class);
-        return model;
+    public static ActorsModel getActorById(String url, int id){
+         return when().get(url +"/" +id).as(ActorsModel.class);
 
     }
 
     public static List<ActorsModel> getAllActors(String url) {
-        List<ActorsModel> listActors = Arrays.asList(
+        return Arrays.asList(
                 when()
                         .get(url)
                         .then()
                         .extract().body().as(ActorsModel[].class));
-        return listActors;
+
     }
+
+
 
     public static int getMaxActorsId(String url) {
 
-        List<ActorsModel> list = new ArrayList<ActorsModel>();
-        list.addAll(getAllActors(url));
+        List<ActorsModel> actorsModelList = new ArrayList<ActorsModel>();
+        actorsModelList.addAll(getAllActors(url));
 
-        int[] ar = new int[list.size()];
+        ArrayList<Integer> arrayOfId = new ArrayList<Integer>();
 
-        for (int i = 0; i <= ar.length - 1; i++) {
-            ar[i] = list.get(i).getId();
+        for (ActorsModel a: actorsModelList) {
+            arrayOfId.add(a.getId());
+
         }
-
-        int maxIndex = 0;
-        for (int i = 0; i < ar.length; i++) {
-             if (maxIndex <ar[i]) {
-                maxIndex = ar[i];
-            }
-        }
-        return maxIndex;
+        return Collections.max(arrayOfId);
     }
 
 

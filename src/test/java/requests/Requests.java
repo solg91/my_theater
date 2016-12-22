@@ -1,9 +1,9 @@
 package requests;
 
-import com.example.models.ActorsModel;
-import com.example.models.Model;
+
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
+import models.Model;
 
 import static io.restassured.RestAssured.given;
 
@@ -12,33 +12,36 @@ import static io.restassured.RestAssured.given;
  */
 public class Requests {
 
-    public static int delete(String url, int id){
+    public static Response delete(String url, int id){
         return  given().
-                contentType("application/json").
+                contentType(ContentType.JSON).
+                param("id", id).
                 when().
-                delete(url + "/" + id).then().extract().statusCode();
+                delete(url + "/" + id);
     }
 
-    public static int post(Model actor, String url) {
+    public static Response post(Model actor, String url) {
         return given().contentType(ContentType.JSON).
                 body(actor).
                 when().
-                post(url).then().extract().statusCode();
+                post(url);
 
     }
 
-    public static int put(Model actor,String url, int id ) {
+    public static Response put(Model actor, String url, int id ) {
         return given().
                 contentType(ContentType.JSON).
+                param("id", id).
                 body(actor).
                 when().
-                put(url + "/"+ id).then().extract().statusCode();
+                put(url + "/"+ id);
 
     }
 
     public static Response getModel (String url, int id) {
         return given()
                 .contentType(ContentType.JSON)
+                .param("id", id)
                 .when()
                 .get(url +"/" + id);
     }

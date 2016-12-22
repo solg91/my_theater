@@ -1,4 +1,4 @@
-package com.example.models;
+package models;
 
 /**
  * Created by solg on 21.12.2016.

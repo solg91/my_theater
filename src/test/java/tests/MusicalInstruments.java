@@ -1,7 +1,8 @@
-import com.example.models.ActorsModel;
-import com.example.models.MusicalInstrumentsModel;
+package tests;
+
 import com.google.gson.Gson;
 import io.restassured.http.ContentType;
+import models.MusicalInstrumentsModel;
 
 import java.util.ArrayList;
 import java.util.Arrays;
