@@ -1,11 +1,11 @@
 package tests;
 
+import com.google.gson.Gson;
+import io.restassured.response.Response;
 import models.ActorsModel;
 import models.EducationModel;
 import org.testng.annotations.Test;
-import tests.Actors;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -20,20 +20,14 @@ import static requests.Requests.*;
  */
 public class ActorsTest extends Actors {
 
-    public final static String ACTORSURL = "http://localhost:3000/actors";
+    public final static String ACTORS_URL = "http://localhost:3000/actors";
 
     @Test
-    public static void addUniqueActorTest() {
-        //текущий размер списка юзеров
-        int currentsize = getAllActors(ACTORSURL).size();
+    public void addUniqueActorTest() {
 
-        //создаем модельнового юзера
-        List<Integer> listMusicalInstruments = new ArrayList<Integer>();
-        listMusicalInstruments.add(5);
-        listMusicalInstruments.add(10);
-
-        List<Integer> previosPlay = new ArrayList<Integer>();
-        previosPlay.add(5);
+        //create new actor model
+        List listMusicalInstruments = Arrays.asList(5, 10);
+        List listPreviousPlay = Arrays.asList(5);
 
         EducationModel educationModel = new EducationModel();
         educationModel.setName("Uiniversity Alberta Nobel");
@@ -41,39 +35,34 @@ public class ActorsTest extends Actors {
         educationModel.setYearOfEnding("2010");
 
         ActorsModel actorsModel = new ActorsModel();
-
-        if (getAllActors(ACTORSURL).isEmpty()) {
-            actorsModel.setId(1);
+        int actorModelId = 0;
+        if (getAllActors(ACTORS_URL).isEmpty()) {
+            actorModelId = 1;
         } else {
-            actorsModel.setId(getMaxActorsId(ACTORSURL) + 1);
+            actorModelId = (getMaxActorsId(ACTORS_URL) + 1);
         }
-
+        actorsModel.setId(actorModelId);
         actorsModel.setName("Marina Nazarenko");
         actorsModel.setEmail("marina@gmail.com");
         actorsModel.setCurrentPlay(5);
         actorsModel.setMusicalInstruments(listMusicalInstruments);
-        actorsModel.setPreviousPlay(previosPlay);
+        actorsModel.setPreviousPlay(listPreviousPlay);
         actorsModel.setPhone("1212.1231.123");
         actorsModel.setSize(38);
         actorsModel.setEducation(educationModel);
 
-        //проверяем код ответа
-       // assertThat("Error with adding actors", post(actorsModel, ACTORSURL), is(201));
-        //сравниваем текущий и предыдущий размер списка
-        assertThat("Incorrect size of list", getAllActors(ACTORSURL).size(), is(not(currentsize)));
+
+        int id = post(actorsModel, ACTORS_URL).as(ActorsModel.class).getId();
+        //check correct Name
+        List<ActorsModel> actorsAfterAdd = Arrays.asList(getModel(ACTORS_URL,id).as(ActorsModel[].class));
+        assertThat(actorsModel.getName(), is(actorsAfterAdd.get(0).getName()));
     }
 
     @Test
-    public static void addNotUnigueActorTest() {
+    public void addNotUnigueActorTest() {
 
-        //текущий размер списка юзеров
-        int currentsize = getAllActors(ACTORSURL).size();
-
-        List<Integer> listMusicalInstruments = new ArrayList<Integer>();
-        listMusicalInstruments.add(5);
-
-        List<Integer> previosPlay = new ArrayList<Integer>();
-        previosPlay.add(5);
+        List listMusicalInstruments = Arrays.asList(5, 10);
+        List listPreviousPlay = Arrays.asList(5);
 
         EducationModel educationModel = new EducationModel();
         educationModel.setName("Uiniversity Alberta Nobel");
@@ -81,145 +70,123 @@ public class ActorsTest extends Actors {
         educationModel.setYearOfEnding("2010");
 
         ActorsModel actorsModel = new ActorsModel();
-        actorsModel.setId(getMaxActorsId(ACTORSURL));
+        actorsModel.setId(getMaxActorsId(ACTORS_URL));
         actorsModel.setName("Marina Nazarenko");
         actorsModel.setEmail("marina@gmail.com");
         actorsModel.setCurrentPlay(5);
         actorsModel.setMusicalInstruments(listMusicalInstruments);
-        actorsModel.setPreviousPlay(previosPlay);
+        actorsModel.setPreviousPlay(listPreviousPlay);
         actorsModel.setPhone("1212.1231.123");
         actorsModel.setSize(38);
         actorsModel.setEducation(educationModel);
 
-        //post(actorsModel, ACTORSURL);
-       // assertThat("User was added successfully", post(actorsModel, ACTORSURL), is(500));
-        //сравниваем текущий и предыдущий размер списка
-        assertThat("Incorrect size of list", getAllActors(ACTORSURL).size(), is(currentsize));
+        //check that actor was not added
+        assertThat("User was added successfully", post(actorsModel, ACTORS_URL).statusCode(), is(500));
     }
 
 
     @Test
-    public static void updateExistingActorTest() {
+    public void updateExistingActorTest() {
 
-        List<Integer> listMusicalInstruments = new ArrayList<Integer>();
-        listMusicalInstruments.add(3);
-        listMusicalInstruments.add(7);
+        int maxActorId = getMaxActorsId(ACTORS_URL);
 
-        List<Integer> previosPlay = new ArrayList<Integer>();
-        previosPlay.add(2);
-        previosPlay.add(8);
+        List<ActorsModel> actorsBeforeUpdate = Arrays.asList(getModel(ACTORS_URL, maxActorId).as(ActorsModel[].class));
 
-        EducationModel educationModel = new EducationModel();
-        educationModel.setName("Uiniversity Alberta Nobel");
-        educationModel.setFaculty("acting skills");
-        educationModel.setYearOfEnding("2010");
-
-        ActorsModel actorsModel = new ActorsModel();
-        actorsModel.setId(getMaxActorsId(ACTORSURL));
+        List<ActorsModel> actorsforUpdate = Arrays.asList(getModel(ACTORS_URL, maxActorId).as(ActorsModel[].class));
+        ActorsModel actorsModel = actorsforUpdate.get(0);
         actorsModel.setName("Ivan Egorovich");
         actorsModel.setEmail("ivan@gmail.com");
         actorsModel.setCurrentPlay(1);
-        actorsModel.setMusicalInstruments(listMusicalInstruments);
-        actorsModel.setPreviousPlay(previosPlay);
-        actorsModel.setPhone("6767678686");
-        actorsModel.setSize(46);
-        actorsModel.setEducation(educationModel);
 
-        //проверяем статус ответа
-       // assertThat("error with updating user", put(actorsModel, ACTORSURL, getMaxActorsId(ACTORSURL)), is(200));
+        put(actorsModel, ACTORS_URL, actorsModel.getId());
+        List<ActorsModel> actorsAfterUpdate = Arrays.asList(getModel(ACTORS_URL, maxActorId).as(ActorsModel[].class));
 
-        //сравниваем значение полей до и после обновления
-        assertThat("Name", getActorById(ACTORSURL, getMaxActorsId(ACTORSURL)).getName(), is(not("Marina Nazarenko")));
-        assertThat("Email", getActorById(ACTORSURL, getMaxActorsId(ACTORSURL)).getEmail(), is(not("marina@gmail.com")));
-        assertThat("CurrentPlay", getActorById(ACTORSURL, getMaxActorsId(ACTORSURL)).getCurrentPlay(), is(not(5)));
-        assertThat("PreviousPlay", getActorById(ACTORSURL, getMaxActorsId(ACTORSURL)).getPreviousPlay(), not(hasItems(equalTo(5))));
-       assertThat("MusicalInstrumen", getActorById(ACTORSURL, getMaxActorsId(ACTORSURL)).getMusicalInstruments(), not(hasItems(equalTo(5))));
-        assertThat("Phone", getActorById(ACTORSURL, getMaxActorsId(ACTORSURL)).getPhone(), is(not("1212.1231.123")));
-        assertThat("Size", getActorById(ACTORSURL, getMaxActorsId(ACTORSURL)).getSize(), is(not(38)));
+        //check correct Name/Email/Current Play
+        assertThat(actorsAfterUpdate.get(0).getName(), is(not(actorsBeforeUpdate.get(0).getName())));
+        assertThat(actorsAfterUpdate.get(0).getEmail(), is(not(actorsBeforeUpdate.get(0).getEmail())));
+        assertThat(actorsAfterUpdate.get(0).getCurrentPlay(), is(not(actorsBeforeUpdate.get(0).getCurrentPlay())));
 
     }
 
     @Test
-    public static void findAllActorsWithMusicalInstruments2or6() {
+    public void findAllActorsWithMusicalInstruments2or6() {
 
-        List<Integer> listInst = new ArrayList<Integer>();
-        listInst.add(2);
-        listInst.add(6);
+        List listInstruments = Arrays.asList(2, 6);
 
         List<ActorsModel> listActorsWithInstruments = Arrays.asList(
                 given().
-                        param("musicalInstruments", listInst).
+                        param("musicalInstruments", listInstruments).
                         when()
-                        .get(ACTORSURL + "/")
+                        .get(ACTORS_URL)
                         .then()
                         .extract().body().as(ActorsModel[].class));
 
-        //проверяем, что список не пустой
-        assertThat("Empty list", listActorsWithInstruments, notNullValue());
-        //проверяеи имя найденного актера
-        assertThat("Wrong actor", listActorsWithInstruments.get(0).getName(), is("Olga Karpova"));
+        //check empty List
+        assertThat("Empty list", listActorsWithInstruments.isEmpty(), is(false));
+
+        //check instruments for actor from search
+        for (ActorsModel a : listActorsWithInstruments) {
+            assertThat(a.getMusicalInstruments(), anyOf(hasItem(2), hasItem(6)));
+        }
 
     }
 
     @Test
-    public static void findAllActorsWithSizeAndCurrentPlays() {
+    public void findAllActorsWithSizeAndCurrentPlays() {
         int size = 50;
         int currentPlay = 1;
 
-        List<ActorsModel> listActorsWithInstruments = Arrays.asList(
+        List<ActorsModel> listActorsAfterSearch = Arrays.asList(
                 given().
                         param("size", size).
                         param("currentPlay", currentPlay).
                         when()
-                        .get(ACTORSURL + "/")
+                        .get(ACTORS_URL)
                         .then()
                         .extract().body().as(ActorsModel[].class));
 
-        //проверяем, что список не пустой
-        assertThat("Empty list", listActorsWithInstruments, notNullValue());
+        //check empty List
+        assertThat("Empty list", listActorsAfterSearch.isEmpty(), is(false));
+        //check parametrs for actor from search
 
-        //проверяеи имя найденного актера
-        assertThat("Wrong actor", listActorsWithInstruments.get(0).getName(), is("Nicholas Runolfsdottir V"));
+        for (ActorsModel a : listActorsAfterSearch) {
+            assertThat(a.getSize(), is(size));
+            assertThat(a.getCurrentPlay(), is(currentPlay));
+        }
 
     }
 
     @Test
-    public static void addNewInstrumentsToUser() {
+    public void addNewInstrumentsToUser() {
 
-        int newInst = 6;
-        List<Integer> listInstToAdd = new ArrayList<Integer>();
-        listInstToAdd.add(newInst);
+        int newInst = 9;
+        List listInstToAdd = Arrays.asList(newInst);
 
-        List<Integer> previosPlay = new ArrayList<Integer>();
-        previosPlay.add(2);
-        previosPlay.add(8);
+        int maxActorId = getMaxActorsId(ACTORS_URL);
 
-        EducationModel educationModel = new EducationModel();
-        educationModel.setName("Uiniversity Alberta Nobel");
-        educationModel.setFaculty("acting skills");
-        educationModel.setYearOfEnding("2010");
+        List<ActorsModel> actorsBeforeUpdate = Arrays.asList(getModel(ACTORS_URL, maxActorId).as(ActorsModel[].class));
 
-        ActorsModel actorsModel = new ActorsModel();
-        actorsModel.setId(7);
-        actorsModel.setName("Ivan Egorovich");
-        actorsModel.setEmail("ivan@gmail.com");
-        actorsModel.setCurrentPlay(1);
-
-        actorsModel.setPreviousPlay(previosPlay);
-        actorsModel.setPhone("6767678686");
-        actorsModel.setSize(46);
-        actorsModel.setEducation(educationModel);
+        List<ActorsModel> actorsforUpdate = Arrays.asList(getModel(ACTORS_URL, maxActorId).as(ActorsModel[].class));
+        ActorsModel actorsModel = actorsforUpdate.get(0);
         actorsModel.setMusicalInstruments(listInstToAdd);
 
-       // assertThat("error with updating user", put(actorsModel, ACTORSURL, 7), is(200));
+        Response response = put(actorsModel, ACTORS_URL, actorsModel.getId());
+        List<ActorsModel> actorsAfterUpdate = Arrays.asList(getModel(ACTORS_URL, maxActorId).as(ActorsModel[].class));
+
+        //check correct MusicalInstruments
+        assertThat(actorsAfterUpdate.get(0).getMusicalInstruments(), is(not(actorsBeforeUpdate.get(0).getMusicalInstruments())));
     }
 
     @Test
-    public static void deleteActorTest() {
-         getMaxActorsId(ACTORSURL);
-       // addUniqueActorTest();
-        //проверяем код ответа
-        //assertThat(delete(ACTORSURL, getMaxActorsId(ACTORSURL)), is(200));
+    public void deleteActorTest() {
+
+        //addUniqueActorTest();
+        int maxActorId = getMaxActorsId(ACTORS_URL);
+        assertThat(delete(ACTORS_URL, maxActorId).statusCode(), is(200));
+        //check null ID  for deleted actor
+        List<ActorsModel> actorsAfterDelete = Arrays.asList(getModel(ACTORS_URL, maxActorId).as(ActorsModel[].class));
+        assertThat(actorsAfterDelete.isEmpty(), is(true));
+
     }
 
 

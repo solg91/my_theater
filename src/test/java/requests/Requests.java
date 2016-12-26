@@ -1,23 +1,25 @@
 package requests;
 
 
-import io.restassured.http.ContentType;
-import io.restassured.response.Response;
-import models.Model;
+        import io.restassured.http.ContentType;
+        import io.restassured.response.Response;
+        import io.restassured.response.ResponseBody;
+        import models.ActorsModel;
+        import models.Model;
 
-import static io.restassured.RestAssured.given;
+        import static io.restassured.RestAssured.given;
 
 /**
  * Created by solg on 21.12.2016.
  */
 public class Requests {
 
-    public static Response delete(String url, int id){
-        return  given().
+    public static Response delete(String url, int id) {
+        return given().
+                pathParam("id", id).
                 contentType(ContentType.JSON).
-                param("id", id).
                 when().
-                delete(url + "/" + id);
+                delete(url +"/{id}");
     }
 
     public static Response post(Model actor, String url) {
@@ -28,21 +30,21 @@ public class Requests {
 
     }
 
-    public static Response put(Model actor, String url, int id ) {
+    public static Response put(Model actor, String url, int id1) {
         return given().
                 contentType(ContentType.JSON).
-                param("id", id).
+                pathParam("id", id1).
                 body(actor).
                 when().
-                put(url + "/"+ id);
+                put(url +"/{id}");
 
     }
 
-    public static Response getModel (String url, int id) {
+    public static Response getModel(String url, int id1) {
         return given()
                 .contentType(ContentType.JSON)
-                .param("id", id)
+                .queryParam("id", id1)
                 .when()
-                .get(url +"/" + id);
+                .get(url);
     }
 }
